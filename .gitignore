@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# Local / private configs (不要提交到开源仓库)
+**/template-mapping.local.md
+**/*.local.md
+**/*.local.yaml
+**/*.local.yml
+**/.env
+**/.env.*
+
+# Logs / tmp
+*.log
+tmp/

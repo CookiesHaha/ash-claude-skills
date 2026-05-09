@@ -17,7 +17,7 @@ A collection of [Claude Code](https://docs.anthropic.com/en/docs/claude-code) Sk
 
 ```bash
 cd <你的项目>/.claude/skills/
-git clone https://github.com/<your-org>/claude-skills.git _claude-skills
+git clone https://github.com/CookiesHaha/ash-claude-skills.git _claude-skills
 ln -s _claude-skills/skills/lark-workflow-prd-sync .
 ln -s _claude-skills/skills/lark-workflow-prd-to-userstory .
 ```
@@ -26,7 +26,7 @@ ln -s _claude-skills/skills/lark-workflow-prd-to-userstory .
 
 ```bash
 cd ~/.claude/skills/
-git clone https://github.com/<your-org>/claude-skills.git _claude-skills
+git clone https://github.com/CookiesHaha/ash-claude-skills.git _claude-skills
 ln -s _claude-skills/skills/lark-workflow-prd-sync .
 ln -s _claude-skills/skills/lark-workflow-prd-to-userstory .
 ```

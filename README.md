@@ -282,3 +282,33 @@ mcp__FeishuProjectMcp__list_workitem_role_config(
 ## 📄 License
 
 [MIT](LICENSE)
+
+---
+
+## 旧版安装方式（Deprecated）
+
+> ⚠️ 以下 clone + symlink 方式已弃用，推荐使用 Plugin 方式安装（见上）。
+
+旧版安装步骤：
+1. `git clone <repo> ~/.claude/skills/_ash-prd`
+2. `ln -s ~/.claude/skills/_ash-prd/skills/write-a-prd ~/.claude/skills/write-a-prd`
+3. （类似 symlink 三件套 + lark-shared）
+
+### 从旧版迁移到 Plugin 方式
+
+1. 删除旧 symlink（不删源文件）：
+   ```bash
+   rm -f ~/.claude/skills/write-a-prd
+   rm -f ~/.claude/skills/lark-workflow-prd-sync
+   rm -f ~/.claude/skills/lark-workflow-prd-to-userstory
+   rm -f ~/.claude/skills/lark-shared
+   ```
+2. 安装 Plugin：
+   ```bash
+   /plugin marketplace add https://github.com/CookiesHaha/ash-claude-skills.git
+   /plugin install lark-prd-workflow@ash-claude-marketplace
+   ```
+3. 重跑向导：
+   ```bash
+   /prd-setup
+   ```

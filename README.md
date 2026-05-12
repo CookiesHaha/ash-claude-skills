@@ -287,7 +287,7 @@ mcp__FeishuProjectMcp__list_workitem_role_config(
 
 ## 旧版安装方式（Deprecated）
 
-> ⚠️ 以下 clone + symlink 方式已弃用，推荐使用 Plugin 方式安装（见上）。
+> ⚠️ 以下 clone + symlink 方式已弃用。推荐改用 Plugin 方式（见下方迁移步骤）。
 
 旧版安装步骤：
 1. `git clone <repo> ~/.claude/skills/_ash-prd`

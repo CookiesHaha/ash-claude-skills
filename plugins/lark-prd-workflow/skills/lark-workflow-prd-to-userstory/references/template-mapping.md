@@ -1,3 +1,15 @@
+## template-mapping.local.md 读取优先级
+
+skill `lark-workflow-prd-to-userstory` 按以下顺序读取 template-mapping：
+
+1. **项目级**（优先）：`<cwd>/.claude/lark-prd-workflow/template-mapping.local.md`
+2. **用户级**：`~/.claude/lark-prd-workflow/template-mapping.local.md`
+3. **Plugin 内置 fallback**：本文件（`references/template-mapping.md`）—— 通用契约，无实际 token/key
+
+在读取本文件前，必须先按顺序检查 1 和 2 是否存在。存在则使用，不存在才 fallback 到本文件。
+
+---
+
 # 字段 / 角色 / 模板映射
 
 **用途：** 把 SKILL.md 主流程与各产品线（PST / CPQ / WLS / 其他）的具体 ID 解耦。本文件分两部分：

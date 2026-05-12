@@ -1,5 +1,5 @@
 ---
-name: prd-setup
+name: lark-prd-workflow-setup
 description: 飞书 PRD 三件套依赖体检与向导配置（lark-cli / OAuth scope / MCP / template-mapping）。可幂等重跑。
 argument-hint: [--skip-mcp] [--skip-mapping]
 allowed-tools: [Bash, Read, Edit]
@@ -11,7 +11,7 @@ allowed-tools: [Bash, Read, Edit]
 - 包含 `--skip-mcp` → Step 4 自动选择"⏭️ 跳过"，无需询问用户
 - 包含 `--skip-mapping` → Step 5 自动选择"⏭️ 跳过"，无需询问用户
 
-# /prd-setup — PRD 三件套依赖向导
+# /lark-prd-workflow-setup — PRD 三件套依赖向导
 
 你是 PRD 三件套依赖向导，帮用户逐步检查并补齐所有运行前提。
 
@@ -48,14 +48,21 @@ allowed-tools: [Bash, Read, Edit]
 
 ## Step 3 · 体检 OAuth scope
 
-- 运行 `lark-cli auth whoami 2>/dev/null`
-- **未登录 / 报错** → 提示：
-  > 尚未授权用户身份（user scope）。请在终端运行以下命令完成授权：
+- 运行 `lark-cli auth status 2>/dev/null` 检查当前授权状态
+- **状态为 `needs_refresh`（token 过期但已授权）** → 提示：
+  > 你的 token 已过期，只需刷新，无需重新授权 scope。请在终端运行：
   > ```
-  > lark-cli auth login --scope "docs:document docs:document:readonly docs:document.comment:read docs:document.comment:write docx:document:write_only bitable:app wiki:wiki:write wiki:wiki:readonly"
+  > lark-cli auth login
+  > ```
+  > （不带 `--scope`，直接刷新 token 即可）
+  > 完成后告知我，我继续下一步。
+- **未登录 / 无任何授权** → 提示：
+  > 尚未授权用户身份。请在终端运行以下命令完成授权：
+  > ```
+  > lark-cli auth login --scope "docs:document.content:read docs:document:export docs:document:import docs:document.comment:read docs:document.comment:create docs:document.comment:update docx:document:write_only docx:document:readonly base:app:read base:app:create base:record:read base:record:create base:record:update wiki:wiki:readonly wiki:node:read wiki:node:create wiki:node:update wiki:space:read"
   > ```
   > 命令会输出一条授权链接，在浏览器打开并完成授权后告知我。
-- **已就绪** → 显示用户身份摘要（邮箱或昵称），打印 ✅
+- **已就绪（status: active）** → 显示用户身份摘要（邮箱或昵称），打印 ✅
 
 ---
 
@@ -64,7 +71,7 @@ allowed-tools: [Bash, Read, Edit]
 询问用户：
 > 你是否需要使用 `prd-to-userstory`（把 PRD §5 写入飞书需求矩阵 / 飞书项目）？
 
-- **否** → 打印 ⏭️ 跳过 MCP 配置，提示"后续需要时重跑 /prd-setup"
+- **否** → 打印 ⏭️ 跳过 MCP 配置，提示"后续需要时重跑 /lark-prd-workflow-setup"
 - **是** →
   1. Read `~/.claude.json`，检查是否已有 `FeishuProjectMcp` 和 `feishu` 两个 MCP server
   2. **已配置** → 打印 ✅
@@ -87,7 +94,7 @@ allowed-tools: [Bash, Read, Edit]
      > 是否自动 merge 写入 `~/.claude.json`？我会先展示完整 diff。
      - **自动写入** → Read `~/.claude.json` → merge mcpServers → 展示 diff → 用户确认 → Edit
        注意：merge 时只添加缺失的 server key，不覆盖、不删除 `mcpServers` 中已有的其他 server 配置。
-     - **我自己来** → 给出上方 JSON 片段，提醒手动写入后重跑 /prd-setup
+     - **我自己来** → 给出上方 JSON 片段，提醒手动写入后重跑 /lark-prd-workflow-setup
 
 ---
 
@@ -124,7 +131,7 @@ allowed-tools: [Bash, Read, Edit]
 | MCP：feishu | ✅ / ❌ / ⏭️ |
 | template-mapping | ✅ / ❌ / ⏭️ |
 
-⏭️ 表示用户选择跳过（非错误），后续需要时可重跑 `/prd-setup` 补全。
+⏭️ 表示用户选择跳过（非错误），后续需要时可重跑 `/lark-prd-workflow-setup` 补全。
 
 各 skill 版本（对每个 skill，运行 `grep -m1 'version:' <skill-SKILL.md-path> 2>/dev/null` 读取版本号；若文件不存在则显示 `未安装`。skill SKILL.md 路径：`~/.claude/plugins/cache/*/lark-prd-workflow/*/skills/<skill-name>/SKILL.md`（glob 匹配））：
 - write-a-prd

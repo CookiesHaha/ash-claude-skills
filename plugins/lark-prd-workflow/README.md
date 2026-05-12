@@ -7,7 +7,7 @@
 ```bash
 /plugin marketplace add https://github.com/CookiesHaha/ash-claude-skills.git
 /plugin install lark-prd-workflow@ash-claude-marketplace
-/prd-setup
+/lark-prd-workflow-setup
 ```
 
 ## 使用
@@ -15,7 +15,7 @@
 - `"写一个 PRD 标题 XXX 大纲 ..."` → 触发 write-a-prd
 - `"把这个 PRD 同步回飞书"` → 触发 lark-workflow-prd-sync
 - `"把 §5 拆成 user story 同步到 SHOP"` → 触发 lark-workflow-prd-to-userstory
-- `/prd-setup` → 向导式依赖体检与配置（可幂等重跑）
+- `/lark-prd-workflow-setup` → 向导式依赖体检与配置（可幂等重跑）
 
 ## 升级
 

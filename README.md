@@ -310,5 +310,5 @@ mcp__FeishuProjectMcp__list_workitem_role_config(
    ```
 3. 重跑向导：
    ```bash
-   /prd-setup
+   /lark-prd-workflow-setup
    ```

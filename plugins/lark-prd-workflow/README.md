@@ -37,7 +37,7 @@ lark-cli auth login --scope "docs:document docs:document:readonly docs:document.
 
 ```bash
 # 1. 添加 marketplace（已添加可跳过）
-/plugin marketplace add https://github.com/CookiesHaha/ash-claude-skills.git
+/plugin marketplace add https://git.hairoutech.com/ash.zeng/ash-claude-skills
 
 # 2. 安装 plugin
 /plugin install lark-prd-workflow@ash-claude-marketplace

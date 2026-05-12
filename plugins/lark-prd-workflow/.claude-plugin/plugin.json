@@ -1,0 +1,7 @@
+{
+  "name": "lark-prd-workflow",
+  "version": "1.0.0",
+  "description": "飞书 PRD 三件套工作流 plugin：write-a-prd → lark-workflow-prd-sync → lark-workflow-prd-to-userstory",
+  "author": { "name": "雪松-Ash Zeng" },
+  "homepage": "https://github.com/CookiesHaha/ash-claude-skills/tree/main/plugins/lark-prd-workflow"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ash-claude-marketplace",
+  "description": "Ash's Claude Code plugins — Lark/Feishu PRD 三件套等",
+  "owner": {
+    "name": "雪松-Ash Zeng",
+    "email": "ash.zeng@hairoutech.com"
+  },
+  "plugins": [
+    {
+      "name": "lark-prd-workflow",
+      "description": "飞书 PRD 三件套：write-a-prd → prd-sync → prd-to-userstory，一键安装并向导配置 lark-cli + 飞书项目 MCP",
+      "author": { "name": "雪松-Ash Zeng" },
+      "category": "productivity",
+      "source": "./plugins/lark-prd-workflow",
+      "homepage": "https://github.com/CookiesHaha/ash-claude-skills"
+    }
+  ]
+}

@@ -5,6 +5,12 @@ argument-hint: [--skip-mcp] [--skip-mapping]
 allowed-tools: [Bash, Read, Edit]
 ---
 
+## 参数预处理
+
+若调用时携带参数（`$ARGUMENTS`）：
+- 包含 `--skip-mcp` → Step 4 自动选择"⏭️ 跳过"，无需询问用户
+- 包含 `--skip-mapping` → Step 5 自动选择"⏭️ 跳过"，无需询问用户
+
 # /prd-setup — PRD 三件套依赖向导
 
 你是 PRD 三件套依赖向导，帮用户逐步检查并补齐所有运行前提。
@@ -80,6 +86,7 @@ allowed-tools: [Bash, Read, Edit]
   4. 询问：
      > 是否自动 merge 写入 `~/.claude.json`？我会先展示完整 diff。
      - **自动写入** → Read `~/.claude.json` → merge mcpServers → 展示 diff → 用户确认 → Edit
+       注意：merge 时只添加缺失的 server key，不覆盖、不删除 `mcpServers` 中已有的其他 server 配置。
      - **我自己来** → 给出上方 JSON 片段，提醒手动写入后重跑 /prd-setup
 
 ---
@@ -94,7 +101,7 @@ allowed-tools: [Bash, Read, Edit]
 - **继续** →
   1. 询问：项目级（当前 `<cwd>/.claude/lark-prd-workflow/`）还是用户级（`~/.claude/lark-prd-workflow/`）？
   2. 打印目标路径
-  3. 读取 plugin 内置模板 `templates/template-mapping.local.md.tpl`，渲染（保留 placeholder）
+  3. 定位模板文件：运行 `find ~/.claude/plugins -name 'template-mapping.local.md.tpl' 2>/dev/null | head -1` 找到模板路径（plugin 安装后路径因版本而异）；若未找到，使用内置占位符内容直接生成。
   4. 提示：
      > 以下是模板内容，你需要填入：
      > - `BASE_APP_TOKEN`：飞书多维表格 URL 中 `/base/` 后的 token
@@ -117,11 +124,13 @@ allowed-tools: [Bash, Read, Edit]
 | MCP：feishu | ✅ / ❌ / ⏭️ |
 | template-mapping | ✅ / ❌ / ⏭️ |
 
-各 skill 版本：
-- write-a-prd：（从 SKILL.md frontmatter 读取 metadata.version）
-- lark-workflow-prd-sync：（同上）
-- lark-workflow-prd-to-userstory：（同上）
-- lark-shared：（同上）
+⏭️ 表示用户选择跳过（非错误），后续需要时可重跑 `/prd-setup` 补全。
+
+各 skill 版本（对每个 skill，运行 `grep -m1 'version:' <skill-SKILL.md-path> 2>/dev/null` 读取版本号；若文件不存在则显示 `未安装`。skill SKILL.md 路径：`~/.claude/plugins/cache/*/lark-prd-workflow/*/skills/<skill-name>/SKILL.md`（glob 匹配））：
+- write-a-prd
+- lark-workflow-prd-sync
+- lark-workflow-prd-to-userstory
+- lark-shared
 
 全部 ✅ 后提示：
 > 配置完成！现在你可以：

@@ -71,10 +71,10 @@ lark-cli auth login --scope "docs:document docs:document:readonly docs:document.
 
 ```bash
 # 1. 添加 marketplace（已添加可跳过）
-/plugin marketplace add https://git.hairoutech.com/ash.zeng/ash-claude-skills
+/plugin marketplace add https://github.com/CookiesHaha/ash-claude-skills
 
 # 2. 安装 plugin
-/plugin install lark-prd-workflow@ash-claude-marketplace
+/plugin install lark-prd-workflow@ash-claude-skills
 
 # 3. 运行向导：体检 lark-cli / OAuth scope / MCP / template-mapping
 /lark-prd-workflow-setup
@@ -85,7 +85,7 @@ lark-cli auth login --scope "docs:document docs:document:readonly docs:document.
 ### 升级
 
 ```bash
-/plugin marketplace update ash-claude-marketplace
+/plugin marketplace update ash-claude-skills
 /plugin upgrade lark-prd-workflow
 ```
 
@@ -231,8 +231,8 @@ rm -f ~/.claude/skills/lark-workflow-prd-to-userstory
 rm -f ~/.claude/skills/lark-shared
 
 # 2. 安装 Plugin
-/plugin marketplace add https://git.hairoutech.com/ash.zeng/ash-claude-skills
-/plugin install lark-prd-workflow@ash-claude-marketplace
+/plugin marketplace add https://github.com/CookiesHaha/ash-claude-skills
+/plugin install lark-prd-workflow@ash-claude-skills
 
 # 3. 重跑向导
 /lark-prd-workflow-setup

@@ -1,10 +1,10 @@
 # lark-prd-workflow
 
-飞书 PRD 三件套 Claude Code Plugin，覆盖**从功能大纲到飞书项目工作项**的完整链路：
+飞书 PRD 全流程 Claude Code Plugin，覆盖**从功能大纲到发版公告**的完整链路：
 
 ```
-write-a-prd  →  lark-workflow-prd-sync  →  lark-workflow-prd-to-userstory
-  ✍️ 创建骨架        🔄 飞书 ↔ 本地同步          📋 PRD → User Story → 飞书项目
+write-a-prd  →  lark-workflow-prd-sync  →  lark-workflow-prd-to-userstory  →  release-announcement
+  ✍️ 创建骨架       🔄 飞书 ↔ 本地同步          📋 PRD → User Story → 飞书项目       📢 PRD → 发版公告
 ```
 
 ## 前置条件
@@ -37,10 +37,10 @@ lark-cli auth login --scope "docs:document docs:document:readonly docs:document.
 
 ```bash
 # 1. 添加 marketplace（已添加可跳过）
-/plugin marketplace add https://git.hairoutech.com/ash.zeng/ash-claude-skills
+/plugin marketplace add https://github.com/CookiesHaha/ash-claude-skills
 
 # 2. 安装 plugin
-/plugin install lark-prd-workflow@ash-claude-marketplace
+/plugin install lark-prd-workflow@ash-claude-skills
 
 # 3. 运行向导（配置 lark-cli / OAuth / MCP / template-mapping）
 /lark-prd-workflow-setup
@@ -52,15 +52,16 @@ lark-cli auth login --scope "docs:document docs:document:readonly docs:document.
 |--------|-----------|
 | `写一个 PRD 标题 XXX 大纲 ...` | `write-a-prd` |
 | `把这个 PRD 同步回飞书` | `lark-workflow-prd-sync` |
-| `把 §5 拆成 user story 同步到飞书项目` | `lark-workflow-prd-to-userstory` |
+| `把功能清单拆成 user story 同步到飞书项目` | `lark-workflow-prd-to-userstory` |
+| `生成发版公告` / `release notes` | `release-announcement` |
 | `/lark-prd-workflow-setup` | 向导式依赖体检与配置（可幂等重跑） |
 
-三个技能均**独立可用**；串联时通过 PRD 顶部 YAML frontmatter 与 `[HANDOFF]` 块自动传递上下文。
+四个技能均**独立可用**；串联时通过 PRD 顶部 YAML frontmatter 与 `[HANDOFF]` 块自动传递上下文。
 
 ## 升级
 
 ```bash
-/plugin marketplace update ash-claude-marketplace
+/plugin marketplace update ash-claude-skills
 /plugin upgrade lark-prd-workflow
 ```
 
@@ -78,12 +79,12 @@ lark-cli auth login --scope "docs:document docs:document:readonly docs:document.
 
 | 编号 | 章节 | 谁写 | 谁读 |
 |------|------|------|------|
-| frontmatter | YAML 元数据 | write-a-prd 生成 / prd-sync 维护 | 三件套共用 |
+| frontmatter | YAML 元数据 | write-a-prd 生成 / prd-sync 维护 | 全流程共用 |
 | §1 版本信息 | 版本号 / 创建日期 / 审核人 | write-a-prd | prd-sync 维护 |
 | §2 变更日志 | 每次大/小版本一行 | prd-sync | — |
-| §3 整体说明 | §3.1 整体变更 / §3.2 范围说明 | prd-sync 从 §4 自动生成 | — |
-| **§4 需求详细设计** | **核心创作区**（`##` 模块 + `###` 子项） | **用户主笔** | prd-sync **不覆盖** |
-| §5 功能清单 | 模块 / 描述 / P0 / 待开发 / 备注 | prd-sync 自动生成 | prd-to-userstory 解析 |
+| §3 整体说明 | §3.1 整体变更 / §3.2 范围说明 | prd-sync 从 §4 自动生成 | release-announcement 参考 |
+| **§4 需求详细设计** | **核心创作区**（`##` 模块 + `###` 子项） | **用户主笔** | prd-sync **不覆盖** / release-announcement 提取内容 |
+| §5 功能清单 | 模块 / 描述 / P0 / 待开发 / 备注 | prd-sync 自动生成 | prd-to-userstory 解析 / release-announcement 参考 |
 | §6 Open Questions | 评论锚定的待澄清问题 | prd-sync 维护 | 评审用 |
 | §7 附录 | 参考文档 / 术语表 | 用户 | — |
 
